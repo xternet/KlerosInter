@@ -1,6 +1,6 @@
 import time
 
-### Start project.
+### Start project
 def StartProject(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, temp, title, whitePaper, yellowPaper, tokensTotalSupply):
 	# if project just started
 	if(milestoneArr[i] == milestoneArr[0]):
@@ -27,7 +27,7 @@ def StartProject(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssump
 
 	CheckMilestone(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, temp)
 
-# Checking progress by Krelos.
+# Checking progress by Kleros.
 def CheckMilestone(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, temp):
 	print('waiting...')
 	time.sleep(0.25)
@@ -43,7 +43,7 @@ def CheckMilestone(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssu
 		print('###\n')
 		CheckMilestone(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, temp)
 
-# If milestone completed unlock funds for next one.
+# If milestone completed unlock funds for next one
 def UnlockFunds(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, temp):
 	temp += milestoneArr[i][2]
 	projectCost -= milestoneArr[i][3]
@@ -58,9 +58,9 @@ def UnlockFunds(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumpt
 	else:
 		FinishProject(tokensForEntrepreneur)
 
-# Option for entrepreneur if milestone not finished in predetermined time.
+# Option for entrepreneur if milestone not finished in predetermined time
 def ExtraChance(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, temp):
-	question = input('\n(Entrepreneur) Do you want to open the case in Kleros court? (y/n): ')
+	question = input('\n(Entrepreneur) Do you want to ask investors for extra chance ? (y/n): ')
 
 	if (question == 'y'):
 		DeclareRequest(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, temp)
@@ -96,19 +96,18 @@ def DeclareRequest(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssu
 			print('$ Insufficient balance, you have only %d tokens' % tokensForEntrepreneur)
 			print('###\n')
 			DeclareRequest(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, temp)
-		
-		KlerosCourt(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, val, val1, temp)
+		InvestorsDecision(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, val, val1, temp)
 	except ValueError:
 		print('\n###')
 		print('$ Type integers')
 		print('###\n')
 		DeclareRequest(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, temp)
 
-# Kleros decide if entrepreneur will get extra chance.
-def KlerosCourt(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, timeDif, tokenDif, temp):
+# Investors decide if entrepreneur will get extra chance
+def InvestorsDecision(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, timeDif, tokenDif, temp):
 	print('...')
 	time.sleep(0.5)
-	question = input('(Kleros) Do you accept Entrepreneur propostion? (y/n): ')
+	question = input('(Investors) Do you accept Entrepreneur propostion? (y/n): ')
 
 	if(question == 'y'):
 		ChangeRules(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, timeDif, tokenDif, temp)
@@ -118,9 +117,9 @@ def KlerosCourt(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumpt
 		print('\n###')
 		print('$ Type: y or n')
 		print('###\n')
-		KlerosCourt(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, timeDif, tokenDif, temp)
+		InvestorsDecision(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, timeDif, tokenDif, temp)
 
-# If Kleros agree, the project assumptions will be changed.
+# If Investors agree, the project assumptions will be changed
 def ChangeRules(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, timeDif, tokenDif, temp):
 	tokensForInvestors += tokenDif
 	tokensForEntrepreneur -= tokenDif
@@ -134,17 +133,16 @@ def ChangeRules(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumpt
 	print('Tokens for investors increased from %d to %d' % (tokensForInvestors-tokenDif, tokensForInvestors))
 	print('Entrepreneur tokens balance decreased from %d to %d' % (tokensForEntrepreneur+tokenDif, tokensForEntrepreneur))
 	print('-------------------------------\n')
-	
 	CheckMilestone(milestoneArr, i, projectCost, tokensForEntrepreneur, timeAssumption, tokensForInvestors, temp)
 
-# Case if entrepreneur can't or won't have extra chance.
+# Case if entrepreneur can't or won't have extra chance
 def EndProject(projectCost, tokensForEntrepreneur):
 	print('\n~~~The project failed')
 	print('~%d funds go back to the investors' % projectCost)
 	print('~%d tokens were burned' % tokensForEntrepreneur)
 	exit()
 
-# Case if project is completed.
+# Case if project is completed
 def FinishProject(tokensForEntrepreneur):
 	print('\n~~~The project success')
 	print('~%d frozen tokens were sent to the entrepreneur' % tokensForEntrepreneur)
