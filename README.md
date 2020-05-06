@@ -1,2 +1,1 @@
-# New crowdfunding concept
-Secure crowdfunding
+# Concept for secure crowdfunding
